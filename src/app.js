@@ -77,7 +77,7 @@ function render() {
           <nav class="main-nav" aria-label="${t.ui.mainNav}">${renderNav(navItems)}</nav>
           <div class="header-actions">
             <button type="button" class="lang-toggle" aria-label="${t.ui.switchLang}">${lang === 'tr' ? 'EN' : 'TR'}</button>
-            <a class="btn-login" href="https://app.carbonited.com" target="_blank" rel="noopener noreferrer">${t.nav.login}</a>
+            <a class="btn-login" href="https://app.carbonited.com/v2/login" target="_blank" rel="noopener noreferrer">${t.nav.login}</a>
           </div>
           <button class="menu-toggle" type="button" aria-label="${t.ui.openMenu}" aria-expanded="false">
             <span></span><span></span><span></span>
@@ -93,7 +93,7 @@ function render() {
         <nav aria-label="${t.ui.mobileNav}">${renderNav(navItems, 'mobile')}</nav>
         <div class="mobile-nav__actions">
           <button type="button" class="lang-toggle lang-toggle--mobile">${lang === 'tr' ? 'English' : 'Türkçe'}</button>
-          <a class="btn-login btn-login--mobile" href="https://app.carbonited.com" target="_blank" rel="noopener noreferrer">${t.nav.login}</a>
+          <a class="btn-login btn-login--mobile" href="https://app.carbonited.com/v2/login" target="_blank" rel="noopener noreferrer">${t.nav.login}</a>
         </div>
       </div>
       <div class="site-overlay" hidden></div>
