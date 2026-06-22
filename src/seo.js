@@ -1,4 +1,3 @@
-import { getProject, getProjects } from './data.js';
 import { content, getLang } from './content.js';
 
 export const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://carbonited.com';
@@ -6,8 +5,8 @@ export const SITE_NAME = 'Carbonited';
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og-image.png`;
 
 const KEYWORDS = {
-  tr: 'karbon kredisi, karbon offset, tokenize karbon, emisyon dengeleme, karbon pazaryeri, carbon credits, carbonited, kurumsal karbon, VCS, Gold Standard',
-  en: 'carbon credits, carbon offset, tokenized carbon, emission offsetting, carbon marketplace, carbonited, corporate carbon, VCS, Gold Standard, climate projects',
+  tr: 'karbon kredisi, karbon offset, tokenize karbon, emisyon dengeleme, carbon credits, carbonited, kurumsal karbon, VCS, Gold Standard, net sıfır',
+  en: 'carbon credits, carbon offset, tokenized carbon, emission offsetting, carbonited, corporate carbon, VCS, Gold Standard, climate projects, net zero',
 };
 
 function upsertMeta(attr, key, contentValue) {
@@ -48,36 +47,6 @@ export function getRouteSeo(route, lang = getLang()) {
   const keywords = KEYWORDS[lang];
 
   switch (route.page) {
-    case 'detail': {
-      const p = getProject(route.id, lang);
-      return {
-        title: seo.detailTitle(p.title),
-        description: seo.detailDescription(p),
-        keywords: `${keywords}, ${p.title}, ${p.projectType}, ${p.registry}`,
-        path: `/proje/${p.id}`,
-        ogType: 'article',
-        image: p.heroImage,
-      };
-    }
-    case 'purchase': {
-      const p = getProject(route.id, lang);
-      return {
-        title: seo.purchaseTitle(p.title),
-        description: seo.purchaseDescription(p),
-        keywords: `${keywords}, ${p.title}`,
-        path: `/proje/${p.id}/satin-al`,
-        ogType: 'website',
-        image: p.image,
-      };
-    }
-    case 'portfolio':
-      return {
-        title: seo.portfolioTitle,
-        description: seo.portfolioDescription,
-        keywords,
-        path: '/portfoy',
-        ogType: 'website',
-      };
     case 'privacy':
       return {
         title: seo.privacyTitle,
@@ -116,7 +85,6 @@ export function getRouteSeo(route, lang = getLang()) {
 export function applySeo(route, lang = getLang()) {
   const seo = getRouteSeo(route, lang);
   const canonical = `${SITE_URL}${seo.path}`;
-  const t = content[lang];
 
   document.title = seo.title;
   document.documentElement.lang = lang === 'tr' ? 'tr' : 'en';
@@ -152,13 +120,13 @@ export function applySeo(route, lang = getLang()) {
   upsertMeta('name', 'twitter:description', seo.description);
   upsertMeta('name', 'twitter:image', seo.image || DEFAULT_OG_IMAGE);
 
-  applyStructuredData(route, seo, canonical, lang, t);
+  applyStructuredData(route, seo, canonical, lang);
 }
 
-function applyStructuredData(route, seo, canonical, lang, t) {
+function applyStructuredData(route, seo, canonical, lang) {
   const orgDesc = lang === 'tr'
-    ? 'Dijital karbon kredilerini tokenize eden kurumsal likidite katmanı.'
-    : 'Enterprise liquidity layer for tokenized digital carbon credits.';
+    ? 'Dijital karbon kredilerini aracısız, şeffaf ve anında alın, satın ve itfa edin.'
+    : 'Buy, sell, and retire digital carbon credits with direct access, transparency, and instant settlement.';
 
   const organization = {
     '@context': 'https://schema.org',
@@ -183,8 +151,6 @@ function applyStructuredData(route, seo, canonical, lang, t) {
   organization['@id'] = `${SITE_URL}/#organization`;
 
   const graphs = [organization, website];
-  const projects = getProjects(lang);
-  const c = t.common;
 
   if (route.page === 'market') {
     graphs.push({
@@ -195,88 +161,17 @@ function applyStructuredData(route, seo, canonical, lang, t) {
       url: canonical,
       isPartOf: { '@id': `${SITE_URL}/#website` },
     });
-
-    graphs.push({
-      '@context': 'https://schema.org',
-      '@type': 'ItemList',
-      name: c.projects,
-      itemListElement: projects.map((p, i) => ({
-        '@type': 'ListItem',
-        position: i + 1,
-        name: p.title,
-        url: `${SITE_URL}/proje/${p.id}`,
-      })),
-    });
-  }
-
-  if (route.page === 'detail') {
-    const p = getProject(route.id, lang);
-    graphs.push({
-      '@context': 'https://schema.org',
-      '@type': 'Product',
-      name: p.title,
-      description: p.description,
-      image: p.heroImage,
-      url: canonical,
-      category: p.projectType,
-      brand: { '@type': 'Brand', name: SITE_NAME },
-      offers: {
-        '@type': 'Offer',
-        priceCurrency: 'TRY',
-        price: p.price.replace(/[^\d]/g, '') || '800',
-        availability: 'https://schema.org/InStock',
-        url: `${SITE_URL}/proje/${p.id}/satin-al`,
-      },
-    });
-
-    graphs.push({
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: c.marketplace, item: SITE_URL },
-        { '@type': 'ListItem', position: 2, name: c.projects, item: SITE_URL },
-        { '@type': 'ListItem', position: 3, name: p.title, item: canonical },
-      ],
-    });
-  }
-
-  if (route.page === 'purchase') {
-    graphs.push({
-      '@context': 'https://schema.org',
-      '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: c.marketplace, item: SITE_URL },
-        { '@type': 'ListItem', position: 2, name: c.projects, item: SITE_URL },
-        { '@type': 'ListItem', position: 3, name: c.purchase, item: canonical },
-      ],
-    });
-  }
-
-  if (route.page === 'portfolio') {
-    graphs.push({
-      '@context': 'https://schema.org',
-      '@type': 'WebPage',
-      name: seo.title,
-      description: seo.description,
-      url: canonical,
-    });
   }
 
   upsertJsonLd('jsonld-seo', { '@context': 'https://schema.org', '@graph': graphs });
 }
 
 export function buildSitemapXml() {
-  const projects = getProjects('tr');
   const urls = [
     { loc: '/', priority: '1.0', changefreq: 'daily' },
-    { loc: '/portfoy', priority: '0.8', changefreq: 'weekly' },
     { loc: '/gizlilik', priority: '0.5', changefreq: 'monthly' },
     { loc: '/sartlar', priority: '0.5', changefreq: 'monthly' },
     { loc: '/iletisim', priority: '0.6', changefreq: 'monthly' },
-    ...projects.flatMap((p) => [
-      { loc: `/proje/${p.id}`, priority: '0.9', changefreq: 'weekly' },
-      { loc: `/proje/${p.id}/satin-al`, priority: '0.7', changefreq: 'weekly' },
-    ]),
   ];
 
   const body = urls

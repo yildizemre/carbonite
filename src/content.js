@@ -10,7 +10,7 @@ export const content = {
       title: 'Kurumsal Karbon Kredilerini Tek Bir Platformda Alın, Satın ve İtfa Edin.',
       subtitle:
         'Dijital karbon kredileriyle aracısız, şeffaf ve anında işlem yapın. Küresel regülasyon uyumunuzu sağlayın ve net-sıfır hedeflerinize ulaşın.',
-      cta: 'Projeleri Keşfet',
+      cta: 'Bize Ulaşın',
     },
     metrics: [
       { value: '2.5M+', label: 'Ton Doğrulanmış Kredi' },
@@ -262,7 +262,7 @@ export const content = {
     hero: {
       title: 'Buy, Sell, and Retire Corporate Carbon Credits in One Place',
       subtitle: 'Manage digital carbon credits with direct access, transparency, and instant settlement. Simplify global compliance and achieve your net-zero goals.',
-      cta: 'View Projects',
+      cta: 'Get in Touch',
     },
     metrics: [
       { value: '2.5M+', label: 'Tons of Verified Credits' },

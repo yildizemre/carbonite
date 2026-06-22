@@ -1,4 +1,4 @@
-import { renderMarketPage, renderProjectDetailPage, renderPurchasePage, renderPortfolioPage, renderPrivacyPage, renderTermsPage, renderContactPage } from './pages.js';
+import { renderMarketPage, renderPrivacyPage, renderTermsPage, renderContactPage } from './pages.js';
 import { applySeo } from './seo.js';
 import { content, getLang, setLang } from './content.js';
 
@@ -11,7 +11,6 @@ function getNavItems(route, lang) {
   const isMarket = route.page === 'market';
 
   return [
-    { label: t.marketplace, href: isMarket ? '#marketplace' : '/#marketplace' },
     { label: t.why, href: isMarket ? '#why' : '/#why' },
     { label: t.contact, href: isMarket ? '#contact' : '/#contact' },
   ];
@@ -35,17 +34,12 @@ export function parseRoute() {
   if (parts[0] === 'gizlilik') return { page: 'privacy' };
   if (parts[0] === 'sartlar') return { page: 'terms' };
   if (parts[0] === 'iletisim') return { page: 'contact' };
-  if (parts[0] === 'portfoy') return { page: 'portfolio' };
-  if (parts[0] === 'proje' && parts[1] && parts[2] === 'satin-al') return { page: 'purchase', id: parts[1] };
-  if (parts[0] === 'proje' && parts[1]) return { page: 'detail', id: parts[1] };
+  if (parts[0] === 'portfoy' || parts[0] === 'proje') return { page: 'market', legacyRedirect: true };
   return { page: 'market' };
 }
 
 function renderContent(route) {
   switch (route.page) {
-    case 'detail': return renderProjectDetailPage(route.id);
-    case 'purchase': return renderPurchasePage(route.id);
-    case 'portfolio': return renderPortfolioPage();
     case 'privacy': return renderPrivacyPage();
     case 'terms': return renderTermsPage();
     case 'contact': return renderContactPage();
@@ -60,6 +54,9 @@ export function navigate(path) {
 
 function render() {
   const route = parseRoute();
+  if (route.legacyRedirect && window.location.pathname !== '/') {
+    history.replaceState({}, '', '/');
+  }
   const lang = getLang();
   const t = content[lang];
   applySeo(route, lang);
@@ -205,41 +202,10 @@ function bindInteractions(route) {
   });
 
   if (route.page === 'market') bindLandingInteractions();
-  bindContactForms(route);
-
-  document.querySelectorAll('.filter-dropdown__btn').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const menu = btn.nextElementSibling;
-      const isOpen = menu.classList.contains('is-open');
-      document.querySelectorAll('.filter-dropdown__menu').forEach((m) => m.classList.remove('is-open'));
-      if (!isOpen) menu.classList.add('is-open');
-    });
-  });
-
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('.filter-dropdown')) {
-      document.querySelectorAll('.filter-dropdown__menu').forEach((m) => m.classList.remove('is-open'));
-    }
-  });
+  bindContactForms();
 }
 
 function bindLandingInteractions() {
-  const filterBtns = document.querySelectorAll('.filter-btn');
-  const searchInput = document.querySelector('#all-projects .search-box input');
-
-  filterBtns.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      filterBtns.forEach((b) => b.classList.remove('is-active'));
-      btn.classList.add('is-active');
-      applyFilters(btn.dataset.filter, searchInput?.value || '');
-    });
-  });
-
-  searchInput?.addEventListener('input', () => {
-    const active = document.querySelector('.filter-btn.is-active')?.dataset.filter || 'all';
-    applyFilters(active, searchInput.value);
-  });
-
   document.querySelectorAll('.why-tab').forEach((tab) => {
     tab.addEventListener('click', () => {
       const target = tab.dataset.tab;
@@ -262,19 +228,10 @@ function bindLandingInteractions() {
   });
 }
 
-function bindContactForms(route) {
+function bindContactForms() {
   document.querySelector('.page-contact-form')?.addEventListener('submit', (e) => {
     e.preventDefault();
     alert(content[getLang()].contactPage.formSuccess);
     e.target.reset();
-  });
-}
-
-function applyFilters(category, query) {
-  const q = query.trim().toLowerCase();
-  document.querySelectorAll('.project-card').forEach((card) => {
-    const matchCat = category === 'all' || card.dataset.category === category;
-    const title = card.querySelector('.project-card__title')?.textContent.toLowerCase() || '';
-    card.hidden = !(matchCat && (!q || title.includes(q)));
   });
 }
