@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" role="img" aria-label="Karbon Yakalama">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1a3a4a"/>
+      <stop offset="100%" stop-color="#2d6a7a"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg)"/>
+  <rect x="80" y="120" width="120" height="200" rx="4" fill="#4a5568" opacity="0.9"/>
+  <rect x="220" y="80" width="100" height="240" rx="4" fill="#5a6578"/>
+  <rect x="350" y="140" width="90" height="180" rx="4" fill="#4a5568" opacity="0.85"/>
+  <ellipse cx="140" cy="90" rx="35" ry="25" fill="#94a3b8" opacity="0.6"/>
+  <ellipse cx="270" cy="50" rx="45" ry="30" fill="#cbd5e1" opacity="0.5"/>
+  <ellipse cx="395" cy="110" rx="30" ry="20" fill="#94a3b8" opacity="0.55"/>
+  <circle cx="480" cy="320" r="50" fill="none" stroke="#2db5a9" stroke-width="3" opacity="0.8"/>
+  <text x="480" y="328" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="bold" fill="#2db5a9">CO‚</text>
+</svg>

@@ -1,55 +1,40 @@
-import { renderMarketPage, renderProjectDetailPage, renderPurchasePage, renderPortfolioPage } from './pages.js';
+import { renderMarketPage, renderProjectDetailPage, renderPurchasePage, renderPortfolioPage, renderPrivacyPage, renderTermsPage, renderContactPage } from './pages.js';
+import { applySeo } from './seo.js';
+import { content, getLang, setLang } from './content.js';
 
-function getNavItems(route) {
-  const isMarket = route.page === 'market';
-  const isPortfolio = route.page === 'portfolio';
-
-  return [
-    { label: 'Anasayfa', href: '#/', active: isMarket && !route.sub },
-    { label: 'Pazaryeri', href: '#/', active: isMarket },
-    {
-      label: 'Portföy',
-      href: '#/portfoy',
-      active: isPortfolio,
-      children: [
-        { label: 'Karbon Kredilerim', href: '#/portfoy' },
-        { label: 'İşlem Geçmişi', href: '#/portfoy' },
-        { label: 'Raporlar', href: '#/portfoy' },
-      ],
-    },
-    {
-      label: 'Cüzdan',
-      href: '#',
-      children: [
-        { label: 'Bakiye', href: '#' },
-        { label: 'İtfa', href: '#' },
-        { label: 'Transfer', href: '#' },
-      ],
-    },
-  ];
+function renderLogo(className = 'logo') {
+  return `<a class="${className}" href="/" aria-label="Carbonited"><img src="/Carbonited Logo.png" alt="Carbonited" width="148" height="32" /></a>`;
 }
 
-function chevronIcon() {
-  return `<svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+function getNavItems(route, lang) {
+  const t = content[lang].nav;
+  const isMarket = route.page === 'market';
+
+  return [
+    { label: t.marketplace, href: isMarket ? '#marketplace' : '/#marketplace' },
+    { label: t.why, href: isMarket ? '#why' : '/#why' },
+    { label: t.contact, href: isMarket ? '#contact' : '/#contact' },
+  ];
 }
 
 function renderNav(items, className = '') {
   return `
     <ul class="nav-list ${className}">
       ${items.map((item) => `
-        <li class="nav-item${item.children ? ' has-children' : ''}${item.active ? ' is-active' : ''}">
-          <a href="${item.href}"><span>${item.label}</span>${item.children ? chevronIcon() : ''}</a>
-          ${item.children ? `<ul class="sub-menu">${item.children.map((c) => `<li><a href="${c.href}"><span>${c.label}</span></a></li>`).join('')}</ul>` : ''}
+        <li class="nav-item${item.active ? ' is-active' : ''}">
+          <a href="${item.href}"><span>${item.label}</span></a>
         </li>
       `).join('')}
     </ul>
   `;
 }
 
-function parseRoute() {
-  const hash = window.location.hash.slice(1) || '/';
-  const parts = hash.split('/').filter(Boolean);
+export function parseRoute() {
+  const parts = window.location.pathname.split('/').filter(Boolean);
 
+  if (parts[0] === 'gizlilik') return { page: 'privacy' };
+  if (parts[0] === 'sartlar') return { page: 'terms' };
+  if (parts[0] === 'iletisim') return { page: 'contact' };
   if (parts[0] === 'portfoy') return { page: 'portfolio' };
   if (parts[0] === 'proje' && parts[1] && parts[2] === 'satin-al') return { page: 'purchase', id: parts[1] };
   if (parts[0] === 'proje' && parts[1]) return { page: 'detail', id: parts[1] };
@@ -61,72 +46,117 @@ function renderContent(route) {
     case 'detail': return renderProjectDetailPage(route.id);
     case 'purchase': return renderPurchasePage(route.id);
     case 'portfolio': return renderPortfolioPage();
+    case 'privacy': return renderPrivacyPage();
+    case 'terms': return renderTermsPage();
+    case 'contact': return renderContactPage();
     default: return renderMarketPage();
   }
 }
 
-function getPageTitle(route) {
-  switch (route.page) {
-    case 'detail': return 'Proje Detayı — Carbonited';
-    case 'purchase': return 'Karbon Kredisi Satın Al — Carbonited';
-    case 'portfolio': return 'Portföyüm — Carbonited';
-    default: return 'Carbonited — Kurumsal Karbon Kredisi Pazaryeri';
-  }
+export function navigate(path) {
+  window.history.pushState({}, '', path);
+  render();
 }
 
-export function initPage() {
-  const render = () => {
-    const route = parseRoute();
-    document.title = getPageTitle(route);
-    const navItems = getNavItems(route);
+function render() {
+  const route = parseRoute();
+  const lang = getLang();
+  const t = content[lang];
+  applySeo(route, lang);
+  const navItems = getNavItems(route, lang);
 
-    const app = document.getElementById('app');
-    app.innerHTML = `
-      <div class="site-wrapper">
-        <header class="site-header is-scrolled">
-          <div class="container header-inner">
-            <a class="logo" href="#/">carbonited<span class="logo-dot">•</span></a>
-            <nav class="main-nav" aria-label="Ana menü">${renderNav(navItems)}</nav>
-            <div class="header-actions">
-              <a class="btn-login" href="https://app.carbonited.com" target="_blank" rel="noopener noreferrer">Giriş Yap</a>
-            </div>
-            <button class="menu-toggle" type="button" aria-label="Menüyü aç" aria-expanded="false">
-              <span></span><span></span><span></span>
-            </button>
+  const app = document.getElementById('app');
+  app.innerHTML = `
+    <a class="skip-link" href="#main-content">${t.ui.skipLink}</a>
+    <div class="site-wrapper">
+      <header class="site-header is-scrolled">
+        <div class="container header-inner">
+          ${renderLogo()}
+          <nav class="main-nav" aria-label="${t.ui.mainNav}">${renderNav(navItems)}</nav>
+          <div class="header-actions">
+            <button type="button" class="lang-toggle" aria-label="${t.ui.switchLang}">${lang === 'tr' ? 'EN' : 'TR'}</button>
+            <a class="btn-login" href="https://app.carbonited.com" target="_blank" rel="noopener noreferrer">${t.nav.login}</a>
           </div>
-        </header>
-
-        <div class="mobile-nav" hidden>
-          <div class="mobile-nav__header">
-            <a class="logo" href="#/">carbonited<span class="logo-dot">•</span></a>
-            <button class="menu-close" type="button" aria-label="Menüyü kapat">×</button>
-          </div>
-          <nav aria-label="Mobil menü">${renderNav(navItems, 'mobile')}</nav>
-          <a class="btn-login btn-login--mobile" href="https://app.carbonited.com" target="_blank" rel="noopener noreferrer">Giriş Yap</a>
+          <button class="menu-toggle" type="button" aria-label="${t.ui.openMenu}" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
         </div>
-        <div class="site-overlay" hidden></div>
+      </header>
 
-        <main class="site-main">${renderContent(route)}</main>
-
-        <footer class="site-footer">
-          <div class="container footer-inner">
-            <a class="logo" href="#/">carbonited<span class="logo-dot">•</span></a>
-            <p class="footer-copy">© 2026 Carbonited. Tüm hakları saklıdır.</p>
-            <nav class="footer-nav" aria-label="Alt menü">
-              <a href="#">Gizlilik</a>
-              <a href="#">Şartlar</a>
-              <a href="#">İletişim</a>
-            </nav>
-          </div>
-        </footer>
+      <div class="mobile-nav" hidden>
+        <div class="mobile-nav__header">
+          ${renderLogo()}
+          <button class="menu-close" type="button" aria-label="${t.ui.closeMenu}">×</button>
+        </div>
+        <nav aria-label="${t.ui.mobileNav}">${renderNav(navItems, 'mobile')}</nav>
+        <div class="mobile-nav__actions">
+          <button type="button" class="lang-toggle lang-toggle--mobile">${lang === 'tr' ? 'English' : 'Türkçe'}</button>
+          <a class="btn-login btn-login--mobile" href="https://app.carbonited.com" target="_blank" rel="noopener noreferrer">${t.nav.login}</a>
+        </div>
       </div>
-    `;
+      <div class="site-overlay" hidden></div>
 
-    bindInteractions(route);
-  };
+      <main class="site-main" id="main-content">${renderContent(route)}</main>
 
-  window.addEventListener('hashchange', render);
+      <footer class="site-footer">
+        <div class="container footer-inner">
+          ${renderLogo()}
+          <p class="footer-copy">${t.footer.copy}</p>
+          <nav class="footer-nav" aria-label="${t.ui.footerNav}">
+            <a href="/gizlilik">${t.footer.privacy}</a>
+            <a href="/sartlar">${t.footer.terms}</a>
+            <a href="/iletisim">${t.footer.contact}</a>
+          </nav>
+        </div>
+      </footer>
+    </div>
+  `;
+
+  bindInteractions(route);
+  if (window.location.hash) scrollToHash(window.location.hash);
+  else window.scrollTo(0, 0);
+}
+
+let closeMobileMenuFn = null;
+
+export function initPage() {
+  window.addEventListener('popstate', render);
+
+  document.addEventListener('click', (e) => {
+    const link = e.target.closest('a[href]');
+    if (!link || link.target === '_blank' || e.metaKey || e.ctrlKey || e.shiftKey) return;
+
+    const href = link.getAttribute('href');
+    if (href.startsWith('#')) {
+      e.preventDefault();
+      history.pushState({}, '', href);
+      scrollToHash(href);
+      closeMobileMenuFn?.();
+      return;
+    }
+
+    if (href.includes('#') && href.startsWith('/')) {
+      const [path, hash] = href.split('#');
+      if (path === window.location.pathname || (path === '/' && parseRoute().page === 'market')) {
+        e.preventDefault();
+        if (path !== window.location.pathname) navigate(path);
+        history.pushState({}, '', `#${hash}`);
+        scrollToHash(`#${hash}`);
+        return;
+      }
+    }
+
+    if (!href.startsWith('/')) return;
+    e.preventDefault();
+    navigate(href);
+  });
+
   render();
+}
+
+function scrollToHash(hash) {
+  const el = document.querySelector(hash);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function bindInteractions(route) {
@@ -135,12 +165,14 @@ function bindInteractions(route) {
   const mobileNav = document.querySelector('.mobile-nav');
   const overlay = document.querySelector('.site-overlay');
 
-  const closeMenu = () => {
+  const closeMobileMenu = () => {
+    if (!mobileNav) return;
     mobileNav.hidden = true;
     overlay.hidden = true;
     document.body.classList.remove('menu-open');
     menuToggle?.setAttribute('aria-expanded', 'false');
   };
+  closeMobileMenuFn = closeMobileMenu;
 
   menuToggle?.addEventListener('click', () => {
     mobileNav.hidden = false;
@@ -148,14 +180,16 @@ function bindInteractions(route) {
     document.body.classList.add('menu-open');
     menuToggle.setAttribute('aria-expanded', 'true');
   });
-  menuClose?.addEventListener('click', closeMenu);
-  overlay?.addEventListener('click', closeMenu);
+  menuClose?.addEventListener('click', closeMobileMenu);
+  overlay?.addEventListener('click', closeMobileMenu);
 
   document.querySelectorAll('.nav-item.has-children > a').forEach((link) => {
     link.addEventListener('click', (e) => {
       if (window.innerWidth > 1024) return;
-      e.preventDefault();
-      link.parentElement.classList.toggle('open');
+      if (link.getAttribute('href') === '#') {
+        e.preventDefault();
+        link.parentElement.classList.toggle('open');
+      }
     });
   });
 
@@ -163,7 +197,15 @@ function bindInteractions(route) {
     link.addEventListener('click', (e) => e.preventDefault());
   });
 
-  if (route.page === 'market') bindMarketInteractions();
+  document.querySelectorAll('.lang-toggle').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      setLang(getLang() === 'tr' ? 'en' : 'tr');
+      render();
+    });
+  });
+
+  if (route.page === 'market') bindLandingInteractions();
+  bindContactForms(route);
 
   document.querySelectorAll('.filter-dropdown__btn').forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -181,9 +223,9 @@ function bindInteractions(route) {
   });
 }
 
-function bindMarketInteractions() {
+function bindLandingInteractions() {
   const filterBtns = document.querySelectorAll('.filter-btn');
-  const searchInput = document.querySelector('.search-box input');
+  const searchInput = document.querySelector('#all-projects .search-box input');
 
   filterBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -198,17 +240,33 @@ function bindMarketInteractions() {
     applyFilters(active, searchInput.value);
   });
 
-  document.querySelectorAll('.category-card').forEach((card) => {
-    card.addEventListener('click', () => {
-      const slug = card.dataset.category;
-      const filterBtn = document.querySelector(`.filter-btn[data-filter="${slug}"]`);
-      if (filterBtn) {
-        filterBtns.forEach((b) => b.classList.remove('is-active'));
-        filterBtn.classList.add('is-active');
-        applyFilters(slug, searchInput?.value || '');
-        document.querySelector('.projects-section')?.scrollIntoView({ behavior: 'smooth' });
-      }
+  document.querySelectorAll('.why-tab').forEach((tab) => {
+    tab.addEventListener('click', () => {
+      const target = tab.dataset.tab;
+      document.querySelectorAll('.why-tab').forEach((t) => {
+        t.classList.toggle('is-active', t === tab);
+        t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
+      });
+      document.querySelectorAll('.why-panel').forEach((panel) => {
+        const show = panel.dataset.panel === target;
+        panel.classList.toggle('is-active', show);
+        panel.hidden = !show;
+      });
     });
+  });
+
+  document.querySelector('.home-contact-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert(content[getLang()].ui.formSuccess);
+    e.target.reset();
+  });
+}
+
+function bindContactForms(route) {
+  document.querySelector('.page-contact-form')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert(content[getLang()].contactPage.formSuccess);
+    e.target.reset();
   });
 }
 

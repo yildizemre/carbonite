@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" role="img" aria-label="At1k Yönetimi">
+  <defs>
+    <linearGradient id="bg2" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1e4d3a"/>
+      <stop offset="100%" stop-color="#2db5a9"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="400" fill="url(#bg2)"/>
+  <path d="M200 280 L220 160 L280 160 L300 280 Z" fill="#374151" stroke="#1f2937" stroke-width="2"/>
+  <rect x="215" y="130" width="70" height="35" rx="4" fill="#4b5563"/>
+  <path d="M320 280 L340 170 L400 170 L420 280 Z" fill="#065f46" stroke="#047857" stroke-width="2"/>
+  <rect x="335" y="140" width="70" height="35" rx="4" fill="#059669"/>
+  <path d="M260 200 A50 50 0 1 1 260 199" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round" opacity="0.9"/>
+  <path d="M248 200 L268 220 L295 175" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="450" cy="120" r="40" fill="#fbbf24" opacity="0.85"/>
+  <path d="M430 120 L450 100 L470 120 L460 120 L460 145 L440 145 L440 120 Z" fill="#fff" opacity="0.9"/>
+</svg>

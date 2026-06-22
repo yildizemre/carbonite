@@ -1,0 +1,17 @@
+{
+  "name": "Carbonited — Corporate Carbon Credit Marketplace",
+  "short_name": "Carbonited",
+  "description": "Buy, sell, and retire digital carbon credits with transparency and instant settlement.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FCFBF9",
+  "theme_color": "#34ECDD",
+  "lang": "tr",
+  "icons": [
+    {
+      "src": "/Favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://carbonited.com/sitemap.xml
+
+# App login
+Allow: /proje/
+Allow: /portfoy
+
+Disallow: /api/

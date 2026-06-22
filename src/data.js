@@ -1,23 +1,31 @@
+function pick(field, lang) {
+  if (field && typeof field === 'object' && (field.tr || field.en)) {
+    return field[lang] || field.tr;
+  }
+  return field;
+}
+
 export const categories = [
-  { label: 'Doğa Temelli Çözümler', slug: 'nature', image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&h=400&fit=crop' },
-  { label: 'Yenilenebilir Enerji', slug: 'renewable', image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&h=400&fit=crop' },
-  { label: 'Karbon Yakalama', slug: 'capture', image: 'https://images.unsplash.com/photo-1581094794329-cd2b2a5e3e3a?w=600&h=400&fit=crop' },
-  { label: 'Atık Yönetimi', slug: 'waste', image: 'https://images.unsplash.com/photo-1532996122724-e3c354a0d783?w=600&h=400&fit=crop' },
-  { label: 'Mavi Karbon', slug: 'blue', image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=400&fit=crop' },
+  { label: { tr: 'Doğa Temelli Çözümler', en: 'Nature-Based Solutions' }, slug: 'nature', image: 'https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&h=400&fit=crop' },
+  { label: { tr: 'Yenilenebilir Enerji', en: 'Renewable Energy' }, slug: 'renewable', image: 'https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600&h=400&fit=crop' },
+  { label: { tr: 'Karbon Yakalama', en: 'Carbon Capture' }, slug: 'capture', image: '/images/category-capture.svg' },
+  { label: { tr: 'Atık Yönetimi', en: 'Waste Management' }, slug: 'waste', image: '/images/category-waste.svg' },
+  { label: { tr: 'Mavi Karbon', en: 'Blue Carbon' }, slug: 'blue', image: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=600&h=400&fit=crop' },
 ];
 
 export const filters = [
-  { label: 'Tümü', value: 'all' },
-  { label: 'Doğa Temelli', value: 'nature' },
-  { label: 'Yenilenebilir Enerji', value: 'renewable' },
-  { label: 'Mavi Karbon', value: 'blue' },
-  { label: 'Atık Yönetimi', value: 'waste' },
+  { value: 'all', label: { tr: 'Tümü', en: 'All' } },
+  { value: 'nature', label: { tr: 'Doğa Temelli', en: 'Nature-Based' } },
+  { value: 'renewable', label: { tr: 'Yenilenebilir Enerji', en: 'Renewable Energy' } },
+  { value: 'blue', label: { tr: 'Mavi Karbon', en: 'Blue Carbon' } },
+  { value: 'waste', label: { tr: 'Atık Yönetimi', en: 'Waste Management' } },
+  { value: 'capture', label: { tr: 'Karbon Yakalama', en: 'Carbon Capture' } },
 ];
 
-export const projects = [
+const rawProjects = [
   {
     id: 'turkiye-ruzgar',
-    title: 'Türkiye Rüzgar Enerjisi Projesi',
+    title: { tr: 'Türkiye Rüzgar Enerjisi Projesi', en: 'Turkey Wind Energy Project' },
     category: 'renewable',
     market: 'primary',
     volume: '₺10.452.512',
@@ -30,13 +38,16 @@ export const projects = [
     heroImage: 'https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1200&h=600&fit=crop',
     developer: 'Aperam BioEnergia',
     verifier: 'Earthood Services',
-    sdgs: '13 (İklim Eylemi), 7 (Temiz Enerji), 8 (İnsana Yakışır İş)',
-    description: 'Bu proje, Türkiye\'nin rüzgar potansiyelini kullanarak fosil yakıt tüketimini engellemeyi amaçlamaktadır. Tokenize edilen her kredi, bağımsız doğrulama kuruluşları tarafından onaylanmış fiziksel karbon varlıklarını temsil eder.',
+    sdgs: { tr: '13 (İklim Eylemi), 7 (Temiz Enerji), 8 (İnsana Yakışır İş)', en: '13 (Climate Action), 7 (Clean Energy), 8 (Decent Work)' },
+    description: {
+      tr: 'Bu proje, Türkiye\'nin rüzgar potansiyelini kullanarak fosil yakıt tüketimini engellemeyi amaçlamaktadır. Tokenize edilen her kredi, bağımsız doğrulama kuruluşları tarafından onaylanmış fiziksel karbon varlıklarını temsil eder.',
+      en: 'This project aims to reduce fossil fuel consumption by harnessing Turkey\'s wind potential. Each tokenized credit represents physical carbon assets verified by independent validation bodies.',
+    },
     registry: 'Verra / VCS',
     contractAddress: '0x7a3f...9c2e',
     txHash: '0x4b8d...1f7a',
     methodology: 'ACM0002',
-    projectType: 'Azaltım / Yenilenebilir Enerji',
+    projectType: { tr: 'Azaltım / Yenilenebilir Enerji', en: 'Reduction / Renewable Energy' },
     minPurchase: '1.000 tCO2e',
     maxPurchase: '50.000 tCO2e',
     minCertificate: '500 tCO2e',
@@ -47,7 +58,7 @@ export const projects = [
   },
   {
     id: 'karadeniz-orman',
-    title: 'Karadeniz Orman Restorasyonu',
+    title: { tr: 'Karadeniz Orman Restorasyonu', en: 'Black Sea Forest Restoration' },
     category: 'nature',
     market: 'primary',
     volume: '₺8.210.000',
@@ -60,13 +71,16 @@ export const projects = [
     heroImage: 'https://images.unsplash.com/photo-1511497584788-876760111969?w=1200&h=600&fit=crop',
     developer: 'GreenForest AG',
     verifier: 'SCS Global Services',
-    sdgs: '13 (İklim Eylemi), 15 (Karasal Yaşam)',
-    description: 'Karadeniz bölgesindeki bozulmuş orman alanlarının restorasyonu ve karbon tutulumunun artırılması hedeflenmektedir.',
+    sdgs: { tr: '13 (İklim Eylemi), 15 (Karasal Yaşam)', en: '13 (Climate Action), 15 (Life on Land)' },
+    description: {
+      tr: 'Karadeniz bölgesindeki bozulmuş orman alanlarının restorasyonu ve karbon tutulumunun artırılması hedeflenmektedir.',
+      en: 'This project targets restoration of degraded forest areas in the Black Sea region and increased carbon sequestration.',
+    },
     registry: 'Gold Standard',
     contractAddress: '0x3c1e...8a4f',
     txHash: '0x2d9c...6e3b',
     methodology: 'VM0007',
-    projectType: 'Doğa Temelli / Orman',
+    projectType: { tr: 'Doğa Temelli / Orman', en: 'Nature-Based / Forestry' },
     minPurchase: '500 tCO2e',
     maxPurchase: '30.000 tCO2e',
     minCertificate: '250 tCO2e',
@@ -77,7 +91,7 @@ export const projects = [
   },
   {
     id: 'ege-gunes',
-    title: 'Ege Güneş Enerjisi Santrali',
+    title: { tr: 'Ege Güneş Enerjisi Santrali', en: 'Aegean Solar Power Plant' },
     category: 'renewable',
     market: 'secondary',
     volume: '₺15.780.000',
@@ -90,13 +104,16 @@ export const projects = [
     heroImage: 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?w=1200&h=600&fit=crop',
     developer: 'SolarEge Ltd.',
     verifier: 'TÜV SÜD',
-    sdgs: '7 (Temiz Enerji), 13 (İklim Eylemi)',
-    description: 'Ege bölgesinde kurulan güneş enerjisi santrali ile fosil yakıt tüketiminin azaltılması sağlanmaktadır.',
+    sdgs: { tr: '7 (Temiz Enerji), 13 (İklim Eylemi)', en: '7 (Clean Energy), 13 (Climate Action)' },
+    description: {
+      tr: 'Ege bölgesinde kurulan güneş enerjisi santrali ile fosil yakıt tüketiminin azaltılması sağlanmaktadır.',
+      en: 'A solar power plant in the Aegean region reduces fossil fuel consumption and supplies clean energy.',
+    },
     registry: 'Verra / VCS',
     contractAddress: '0x8d4f...3b7c',
     txHash: '0x6a2e...9d1f',
     methodology: 'AMS-I.D.',
-    projectType: 'Azaltım / Yenilenebilir Enerji',
+    projectType: { tr: 'Azaltım / Yenilenebilir Enerji', en: 'Reduction / Renewable Energy' },
     minPurchase: '2.000 tCO2e',
     maxPurchase: '100.000 tCO2e',
     minCertificate: '1.000 tCO2e',
@@ -107,7 +124,7 @@ export const projects = [
   },
   {
     id: 'marmara-mavi',
-    title: 'Marmara Mavi Karbon Koruma',
+    title: { tr: 'Marmara Mavi Karbon Koruma', en: 'Marmara Blue Carbon Protection' },
     category: 'blue',
     market: 'primary',
     volume: '₺6.340.000',
@@ -120,13 +137,16 @@ export const projects = [
     heroImage: 'https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=1200&h=600&fit=crop',
     developer: 'BlueCarbon Initiative',
     verifier: 'Verra',
-    sdgs: '14 (Sudaki Yaşam), 13 (İklim Eylemi)',
-    description: 'Marmara Denizi kıyı şeridindeki mavi karbon ekosistemlerinin korunması ve restorasyonu.',
+    sdgs: { tr: '14 (Sudaki Yaşam), 13 (İklim Eylemi)', en: '14 (Life Below Water), 13 (Climate Action)' },
+    description: {
+      tr: 'Marmara Denizi kıyı şeridindeki mavi karbon ekosistemlerinin korunması ve restorasyonu.',
+      en: 'Protection and restoration of blue carbon ecosystems along the Marmara Sea coastline.',
+    },
     registry: 'Verra / VCS',
     contractAddress: '0x2f6b...5e9a',
     txHash: '0x9c3d...4f2e',
     methodology: 'VM0033',
-    projectType: 'Mavi Karbon / Koruma',
+    projectType: { tr: 'Mavi Karbon / Koruma', en: 'Blue Carbon / Conservation' },
     minPurchase: '300 tCO2e',
     maxPurchase: '20.000 tCO2e',
     minCertificate: '150 tCO2e',
@@ -137,7 +157,7 @@ export const projects = [
   },
   {
     id: 'istanbul-atik',
-    title: 'İstanbul Atık Dönüşüm Tesisi',
+    title: { tr: 'İstanbul Atık Dönüşüm Tesisi', en: 'Istanbul Waste Conversion Facility' },
     category: 'waste',
     market: 'secondary',
     volume: '₺4.920.000',
@@ -146,17 +166,20 @@ export const projects = [
     maturity: '30 Ay',
     vintage: '2023',
     supply: '75.000 tCO2e',
-    image: 'https://images.unsplash.com/photo-1532996122724-e3c354a0d783?w=400&h=400&fit=crop',
-    heroImage: 'https://images.unsplash.com/photo-1532996122724-e3c354a0d783?w=1200&h=600&fit=crop',
+    image: '/images/category-waste.svg',
+    heroImage: '/images/category-waste.svg',
     developer: 'EcoWaste TR',
     verifier: 'DNV',
-    sdgs: '12 (Sorumlu Üretim), 13 (İklim Eylemi)',
-    description: 'Organik atıkların biyogaz dönüşümü ile metan emisyonlarının azaltılması projesi.',
+    sdgs: { tr: '12 (Sorumlu Üretim), 13 (İklim Eylemi)', en: '12 (Responsible Consumption), 13 (Climate Action)' },
+    description: {
+      tr: 'Organik atıkların biyogaz dönüşümü ile metan emisyonlarının azaltılması projesi.',
+      en: 'A project reducing methane emissions through biogas conversion of organic waste.',
+    },
     registry: 'Gold Standard',
     contractAddress: '0x6e2c...1d8f',
     txHash: '0x3b7a...6c4e',
     methodology: 'AMS-III.D.',
-    projectType: 'Atık Yönetimi / Azaltım',
+    projectType: { tr: 'Atık Yönetimi / Azaltım', en: 'Waste Management / Reduction' },
     minPurchase: '400 tCO2e',
     maxPurchase: '25.000 tCO2e',
     minCertificate: '200 tCO2e',
@@ -167,7 +190,7 @@ export const projects = [
   },
   {
     id: 'anadolu-biyokutle',
-    title: 'Anadolu Biyokütle Enerji Projesi',
+    title: { tr: 'Anadolu Biyokütle Enerji Projesi', en: 'Anatolia Biomass Energy Project' },
     category: 'renewable',
     market: 'primary',
     volume: '₺7.650.000',
@@ -180,13 +203,16 @@ export const projects = [
     heroImage: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=1200&h=600&fit=crop',
     developer: 'BioEnergy Anadolu',
     verifier: 'SGS',
-    sdgs: '7 (Temiz Enerji), 8 (İnsana Yakışır İş), 13 (İklim Eylemi)',
-    description: 'Tarımsal atıklardan biyokütle enerjisi üretimi ile sürdürülebilir enerji sağlanması.',
+    sdgs: { tr: '7 (Temiz Enerji), 8 (İnsana Yakışır İş), 13 (İklim Eylemi)', en: '7 (Clean Energy), 8 (Decent Work), 13 (Climate Action)' },
+    description: {
+      tr: 'Tarımsal atıklardan biyokütle enerjisi üretimi ile sürdürülebilir enerji sağlanması.',
+      en: 'Sustainable energy production from agricultural waste through biomass energy generation.',
+    },
     registry: 'Verra / VCS',
     contractAddress: '0x9a4e...7c3b',
     txHash: '0x5f1d...8a6c',
     methodology: 'ACM0006',
-    projectType: 'Azaltım / Yenilenebilir Enerji',
+    projectType: { tr: 'Azaltım / Yenilenebilir Enerji', en: 'Reduction / Renewable Energy' },
     minPurchase: '800 tCO2e',
     maxPurchase: '40.000 tCO2e',
     minCertificate: '400 tCO2e',
@@ -197,6 +223,27 @@ export const projects = [
   },
 ];
 
-export function getProject(id) {
-  return projects.find((p) => p.id === id) || projects[0];
+function localizeProject(p, lang) {
+  return {
+    ...p,
+    title: pick(p.title, lang),
+    description: pick(p.description, lang),
+    sdgs: pick(p.sdgs, lang),
+    projectType: pick(p.projectType, lang),
+  };
+}
+
+export const projects = rawProjects.map((p) => localizeProject(p, 'tr'));
+
+export function getProject(id, lang = 'tr') {
+  const raw = rawProjects.find((p) => p.id === id) || rawProjects[0];
+  return localizeProject(raw, lang);
+}
+
+export function getProjects(lang = 'tr') {
+  return rawProjects.map((p) => localizeProject(p, lang));
+}
+
+export function getFilters(lang = 'tr') {
+  return filters.map((f) => ({ value: f.value, label: pick(f.label, lang) }));
 }
