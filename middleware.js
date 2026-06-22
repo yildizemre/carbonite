@@ -4,7 +4,7 @@ export default function middleware(request) {
   if (!isBot) return;
 
   const { pathname } = new URL(request.url);
-  const staticPaths = ['/gizlilik', '/sartlar', '/iletisim'];
+  const staticPaths = ['/gizlilik', '/sartlar', '/etik-ilkeler', '/iletisim', '/hakkimizda'];
   if (!staticPaths.includes(pathname)) return;
 
   return new Response(null, {
@@ -15,5 +15,5 @@ export default function middleware(request) {
 }
 
 export const config = {
-  matcher: ['/gizlilik', '/sartlar', '/iletisim'],
+  matcher: ['/gizlilik', '/sartlar', '/etik-ilkeler', '/iletisim', '/hakkimizda'],
 };

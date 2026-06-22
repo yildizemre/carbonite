@@ -63,12 +63,28 @@ export function getRouteSeo(route, lang = getLang()) {
         path: '/sartlar',
         ogType: 'website',
       };
+    case 'ethics':
+      return {
+        title: seo.ethicsTitle,
+        description: seo.ethicsDescription,
+        keywords,
+        path: '/etik-ilkeler',
+        ogType: 'website',
+      };
     case 'contact':
       return {
         title: seo.contactTitle,
         description: seo.contactDescription,
         keywords,
         path: '/iletisim',
+        ogType: 'website',
+      };
+    case 'about':
+      return {
+        title: seo.aboutTitle,
+        description: seo.aboutDescription,
+        keywords,
+        path: '/hakkimizda',
         ogType: 'website',
       };
     default:
@@ -169,7 +185,9 @@ function applyStructuredData(route, seo, canonical, lang) {
 export function buildSitemapXml() {
   const urls = [
     { loc: '/', priority: '1.0', changefreq: 'daily' },
+    { loc: '/hakkimizda', priority: '0.8', changefreq: 'monthly' },
     { loc: '/gizlilik', priority: '0.5', changefreq: 'monthly' },
+    { loc: '/etik-ilkeler', priority: '0.5', changefreq: 'monthly' },
     { loc: '/sartlar', priority: '0.5', changefreq: 'monthly' },
     { loc: '/iletisim', priority: '0.6', changefreq: 'monthly' },
   ];

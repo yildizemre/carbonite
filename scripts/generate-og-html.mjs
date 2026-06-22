@@ -8,7 +8,9 @@ const siteUrl = process.env.VITE_SITE_URL || 'https://carbonited.com';
 const ogImage = `${siteUrl}/og-image.png`;
 
 const staticPages = [
+  { path: 'hakkimizda', title: 'Biz Kimiz — Carbonited', description: 'Carbonited ekibi, vizyonu ve yeşil ekonomi altyapısı hakkında bilgi edinin.' },
   { path: 'gizlilik', title: 'Gizlilik Politikası — Carbonited', description: 'Carbonited gizlilik politikası. Kişisel verilerinizin nasıl toplandığı ve korunduğu.' },
+  { path: 'etik-ilkeler', title: 'Etik İlkeler — Carbonited', description: 'CARBONITED DMCC etik ilkeleri ve kurumsal davranış standartları.' },
   { path: 'sartlar', title: 'Kullanım Şartları — Carbonited', description: 'Carbonited platform kullanım şartları ve hizmet koşulları.' },
   { path: 'iletisim', title: 'İletişim — Carbonited', description: 'Carbonited ile iletişime geçin. Kurumsal satış, proje başvurusu ve teknik destek.' },
 ];

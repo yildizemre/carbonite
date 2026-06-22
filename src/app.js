@@ -1,4 +1,4 @@
-import { renderMarketPage, renderPrivacyPage, renderTermsPage, renderContactPage } from './pages.js';
+import { renderMarketPage, renderPrivacyPage, renderTermsPage, renderEthicsPage, renderAboutPage, renderContactPage } from './pages.js';
 import { applySeo } from './seo.js';
 import { content, getLang, setLang } from './content.js';
 
@@ -11,6 +11,7 @@ function getNavItems(route, lang) {
   const isMarket = route.page === 'market';
 
   return [
+    { label: t.about, href: '/hakkimizda' },
     { label: t.why, href: isMarket ? '#why' : '/#why' },
     { label: t.contact, href: isMarket ? '#contact' : '/#contact' },
   ];
@@ -31,8 +32,10 @@ function renderNav(items, className = '') {
 export function parseRoute() {
   const parts = window.location.pathname.split('/').filter(Boolean);
 
+  if (parts[0] === 'hakkimizda') return { page: 'about' };
   if (parts[0] === 'gizlilik') return { page: 'privacy' };
   if (parts[0] === 'sartlar') return { page: 'terms' };
+  if (parts[0] === 'etik-ilkeler') return { page: 'ethics' };
   if (parts[0] === 'iletisim') return { page: 'contact' };
   if (parts[0] === 'portfoy' || parts[0] === 'proje') return { page: 'market', legacyRedirect: true };
   return { page: 'market' };
@@ -40,8 +43,10 @@ export function parseRoute() {
 
 function renderContent(route) {
   switch (route.page) {
+    case 'about': return renderAboutPage();
     case 'privacy': return renderPrivacyPage();
     case 'terms': return renderTermsPage();
+    case 'ethics': return renderEthicsPage();
     case 'contact': return renderContactPage();
     default: return renderMarketPage();
   }
@@ -100,7 +105,9 @@ function render() {
           ${renderLogo()}
           <p class="footer-copy">${t.footer.copy}</p>
           <nav class="footer-nav" aria-label="${t.ui.footerNav}">
+            <a href="/hakkimizda">${t.footer.about}</a>
             <a href="/gizlilik">${t.footer.privacy}</a>
+            <a href="/etik-ilkeler">${t.footer.ethics}</a>
             <a href="/sartlar">${t.footer.terms}</a>
             <a href="/iletisim">${t.footer.contact}</a>
           </nav>

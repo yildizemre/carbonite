@@ -2,6 +2,7 @@ export const content = {
   tr: {
     nav: {
       marketplace: 'Pazaryeri',
+      about: 'Biz Kimiz',
       why: 'Neden Carbonited?',
       contact: 'İletişim',
       login: 'Giriş Yap',
@@ -97,7 +98,7 @@ export const content = {
       submit: 'Talebi Gönder',
       note: 'Form demo amaçlıdır; talepler şu an kaydedilmemektedir.',
     },
-    footer: { copy: '© 2026 Carbonited. Tüm hakları saklıdır.', privacy: 'Gizlilik', terms: 'Şartlar', contact: 'İletişim' },
+    footer: { copy: '© 2026 Carbonited. Tüm hakları saklıdır.', about: 'Biz Kimiz', privacy: 'Gizlilik', ethics: 'Etik İlkeler', terms: 'Şartlar', contact: 'İletişim' },
     ui: {
       skipLink: 'İçeriğe atla',
       openMenu: 'Menüyü aç',
@@ -196,25 +197,12 @@ export const content = {
     ],
     privacy: {
       title: 'Gizlilik Politikası',
-      sections: [
-        { heading: '1. Veri Sorumlusu', paragraphs: ['Carbonited (“biz”, “platform”) olarak kişisel verilerinizin güvenliğine önem veriyoruz. Bu politika, carbonited.com ve app.carbonited.com üzerinden toplanan verilerin nasıl işlendiğini açıklar.'] },
-        { heading: '2. Toplanan Veriler', paragraphs: ['Hesap oluşturma, kimlik doğrulama ve işlem güvenliği için ad, soyad, e-posta, cüzdan adresi ve işlem geçmişi gibi veriler toplanabilir. Teknik loglar (IP, tarayıcı, cihaz) hizmet kalitesi için saklanır.'] },
-        { heading: '3. Verilerin Kullanım Amacı', paragraphs: ['Verileriniz; platform hizmetlerinin sunulması, yasal yükümlülüklerin yerine getirilmesi, dolandırıcılık önleme, müşteri desteği ve ürün geliştirme amacıyla işlenir.'] },
-        { heading: '4. Veri Paylaşımı', paragraphs: ['Kişisel verileriniz, yasal zorunluluklar veya açık rızanız dışında üçüncü taraflarla paylaşılmaz. Altyapı sağlayıcıları (hosting, analitik) yalnızca hizmet sunumu kapsamında veri işler.'] },
-        { heading: '5. Haklarınız', paragraphs: ['KVKK kapsamında verilerinize erişim, düzeltme, silme ve işlemeye itiraz haklarına sahipsiniz. Talepleriniz için contact@carbonited.com adresine yazabilirsiniz.'] },
-        { heading: '6. Güncellemeler', paragraphs: ['Bu politika zaman zaman güncellenebilir. Önemli değişiklikler sitede duyurulur. Son güncelleme: Mart 2026.'] },
-      ],
     },
     terms: {
       title: 'Kullanım Şartları',
-      sections: [
-        { heading: '1. Kabul', paragraphs: ['Carbonited platformunu kullanarak bu şartları kabul etmiş sayılırsınız. Platform, tokenize karbon kredisi alım-satım ve portföy yönetimi hizmetleri sunar.'] },
-        { heading: '2. Hizmet Kapsamı', paragraphs: ['Platform, doğrulanmış karbon kredi projelerinin listelenmesi, tokenizasyonu ve takasını kolaylaştırır. Carbonited, proje geliştiricisi değildir; aracı likidite katmanı olarak hizmet verir.'] },
-        { heading: '3. Kullanıcı Yükümlülükleri', paragraphs: ['Hesap bilgilerinizin gizliliğinden siz sorumlusunuz. Yasalara uygun şekilde işlem yapmalı, yanlış veya yanıltıcı bilgi vermemelisiniz.'] },
-        { heading: '4. Risk Bildirimi', paragraphs: ['Karbon kredisi ve dijital varlık işlemleri piyasa, düzenleyici ve teknoloji riskleri içerir. Geçmiş performans gelecek getiriyi garanti etmez.'] },
-        { heading: '5. Fikri Mülkiyet', paragraphs: ['Carbonited markası, logosu ve platform içeriği telif hakkı ile korunmaktadır. İzinsiz kopyalama veya ticari kullanım yasaktır.'] },
-        { heading: '6. Uygulanacak Hukuk', paragraphs: ['Bu şartlar Türkiye Cumhuriyeti kanunlarına tabidir. Uyuşmazlıklarda İstanbul mahkemeleri yetkilidir.'] },
-      ],
+    },
+    ethics: {
+      title: 'Etik İlkeler',
     },
     contactPage: {
       title: 'İletişim',
@@ -249,8 +237,12 @@ export const content = {
       privacyDescription: 'Carbonited gizlilik politikası. Kişisel verilerinizin nasıl toplandığı ve korunduğu.',
       termsTitle: 'Kullanım Şartları — Carbonited',
       termsDescription: 'Carbonited platform kullanım şartları ve hizmet koşulları.',
+      ethicsTitle: 'Etik İlkeler — Carbonited',
+      ethicsDescription: 'CARBONITED DMCC etik ilkeleri ve kurumsal davranış standartları.',
       contactTitle: 'İletişim — Carbonited',
       contactDescription: 'Carbonited ile iletişime geçin. Kurumsal satış, proje başvurusu ve teknik destek.',
+      aboutTitle: 'Biz Kimiz — Carbonited',
+      aboutDescription: 'Carbonited ekibi, vizyonu ve yeşil ekonomi altyapısı hakkında bilgi edinin. ReFi, Deep-Tech ve iklim finansmanında liderlik.',
       detailTitle: (title) => `${title} | Karbon Kredisi Projesi — Carbonited`,
       detailDescription: (p) => `${p.title} — ${p.developer} tarafından geliştirilen, ${p.verifier} doğrulamalı tokenize karbon kredisi. ${p.registry}, vintage ${p.vintage}.`,
       purchaseTitle: (title) => `${title} Karbon Kredisi Satın Al — Carbonited`,
@@ -258,7 +250,7 @@ export const content = {
     },
   },
   en: {
-    nav: { marketplace: 'Marketplace', why: 'Why Carbonited?', contact: 'Contact', login: 'Sign In' },
+    nav: { marketplace: 'Marketplace', about: 'About Us', why: 'Why Carbonited?', contact: 'Contact', login: 'Sign In' },
     hero: {
       title: 'Buy, Sell, and Retire Corporate Carbon Credits in One Place',
       subtitle: 'Manage digital carbon credits with direct access, transparency, and instant settlement. Simplify global compliance and achieve your net-zero goals.',
@@ -333,7 +325,7 @@ export const content = {
       solutions: ['Carbon credit procurement', 'Project listing', 'dMRV services', 'API & integration', 'Other'],
       submit: 'Submit Request', note: 'This form is for demo purposes; submissions are not stored yet.',
     },
-    footer: { copy: '© 2026 Carbonited. All rights reserved.', privacy: 'Privacy', terms: 'Terms', contact: 'Contact' },
+    footer: { copy: '© 2026 Carbonited. All rights reserved.', about: 'About Us', privacy: 'Privacy', ethics: 'Code of Ethics', terms: 'Terms', contact: 'Contact' },
     ui: {
       skipLink: 'Skip to content',
       openMenu: 'Open menu',
@@ -432,25 +424,12 @@ export const content = {
     ],
     privacy: {
       title: 'Privacy Policy',
-      sections: [
-        { heading: '1. Data Controller', paragraphs: ['At Carbonited (“we”, “the platform”), we take the security of your personal data seriously. This policy explains how data collected via carbonited.com and app.carbonited.com is processed.'] },
-        { heading: '2. Data Collected', paragraphs: ['We may collect name, email, wallet address, and transaction history for account creation, identity verification, and transaction security. Technical logs (IP, browser, device) are stored for service quality.'] },
-        { heading: '3. Purpose of Processing', paragraphs: ['Your data is processed to provide platform services, fulfill legal obligations, prevent fraud, offer customer support, and improve our products.'] },
-        { heading: '4. Data Sharing', paragraphs: ['Personal data is not shared with third parties except where required by law or with your explicit consent. Infrastructure providers (hosting, analytics) process data only to deliver services.'] },
-        { heading: '5. Your Rights', paragraphs: ['You have the right to access, rectify, delete, and object to processing of your data. Contact us at contact@carbonited.com for requests.'] },
-        { heading: '6. Updates', paragraphs: ['This policy may be updated from time to time. Material changes will be announced on the site. Last updated: March 2026.'] },
-      ],
     },
     terms: {
-      title: 'Terms of Service',
-      sections: [
-        { heading: '1. Acceptance', paragraphs: ['By using the Carbonited platform, you agree to these terms. The platform provides tokenized carbon credit trading and portfolio management services.'] },
-        { heading: '2. Scope of Service', paragraphs: ['The platform facilitates listing, tokenization, and trading of verified carbon credit projects. Carbonited is not a project developer; it operates as an intermediary liquidity layer.'] },
-        { heading: '3. User Obligations', paragraphs: ['You are responsible for keeping your account credentials secure. You must transact in compliance with applicable laws and must not provide false or misleading information.'] },
-        { heading: '4. Risk Disclosure', paragraphs: ['Carbon credit and digital asset transactions involve market, regulatory, and technology risks. Past performance does not guarantee future returns.'] },
-        { heading: '5. Intellectual Property', paragraphs: ['The Carbonited brand, logo, and platform content are protected by copyright. Unauthorized copying or commercial use is prohibited.'] },
-        { heading: '6. Governing Law', paragraphs: ['These terms are governed by the laws of the Republic of Türkiye. Istanbul courts have jurisdiction over disputes.'] },
-      ],
+      title: 'Terms of Use',
+    },
+    ethics: {
+      title: 'Code of Ethics',
     },
     contactPage: {
       title: 'Contact',
@@ -483,10 +462,14 @@ export const content = {
       portfolioDescription: 'Manage tokenized carbon credits in your Carbonited portfolio.',
       privacyTitle: 'Privacy Policy — Carbonited',
       privacyDescription: 'Carbonited privacy policy. How your personal data is collected and protected.',
-      termsTitle: 'Terms of Service — Carbonited',
-      termsDescription: 'Carbonited platform terms of service and conditions.',
+      termsTitle: 'Terms of Use — Carbonited',
+      termsDescription: 'Carbonited platform terms of use and service conditions.',
+      ethicsTitle: 'Code of Ethics — Carbonited',
+      ethicsDescription: 'CARBONITED DMCC code of ethics and corporate conduct standards.',
       contactTitle: 'Contact — Carbonited',
       contactDescription: 'Contact Carbonited. Enterprise sales, project applications, and technical support.',
+      aboutTitle: 'About Us — Carbonited',
+      aboutDescription: 'Learn about the Carbonited team, vision, and green economy infrastructure. Leadership in ReFi, deep tech, and climate finance.',
       detailTitle: (title) => `${title} | Carbon Credit Project — Carbonited`,
       detailDescription: (p) => `${p.title} — tokenized carbon credit project developed by ${p.developer}, verified by ${p.verifier}. ${p.registry}, vintage ${p.vintage}.`,
       purchaseTitle: (title) => `Buy ${title} Carbon Credits — Carbonited`,

@@ -1,6 +1,11 @@
-import { getProject, getProjects, getFilters } from './data.js';
+import { getProject } from './data.js';
 import { renderLandingPage } from './landing.js';
 import { content, getLang } from './content.js';
+import { aboutContent } from './about-content.js';
+import { privacyContent } from './privacy-content.js';
+import { termsContent } from './terms-content.js';
+import { ethicsContent } from './ethics-content.js';
+import { renderLegalPage } from './legal-render.js';
 
 export function renderBreadcrumb(items, lang = getLang()) {
   const t = content[lang].ui;
@@ -267,38 +272,97 @@ export function renderPortfolioPage() {
   `;
 }
 
-function renderLegalPage(title, sections) {
-  return `
-    <div class="page page--legal">
-      <div class="container container--narrow">
-        <h1 class="page-title">${title}</h1>
-        <div class="legal-content">
-          ${sections
-            .map(
-              (s) => `
-            <section class="legal-section">
-              <h2>${s.heading}</h2>
-              ${s.paragraphs.map((p) => `<p>${p}</p>`).join('')}
-            </section>
-          `
-            )
-            .join('')}
-        </div>
-      </div>
-    </div>
-  `;
-}
-
 export function renderPrivacyPage() {
   const lang = getLang();
-  const { title, sections } = content[lang].privacy;
-  return renderLegalPage(title, sections);
+  const { title, intro = [], sections } = privacyContent[lang];
+  return renderLegalPage(title, sections, { intro, wide: true });
 }
 
 export function renderTermsPage() {
   const lang = getLang();
-  const { title, sections } = content[lang].terms;
-  return renderLegalPage(title, sections);
+  const { title, intro = [], sections } = termsContent[lang];
+  return renderLegalPage(title, sections, { intro, wide: true });
+}
+
+export function renderEthicsPage() {
+  const lang = getLang();
+  const { title, introTitle, intro = [], sections } = ethicsContent[lang];
+  return renderLegalPage(title, sections, { intro, introTitle, wide: true });
+}
+
+export function renderAboutPage() {
+  const lang = getLang();
+  const a = aboutContent[lang];
+
+  const founderCards = a.founders
+    .map(
+      (f) => `
+    <article class="founder-card${f.image ? ' founder-card--with-photo' : ''}">
+      ${f.image ? `<div class="founder-card__media"><img class="founder-card__photo" src="${f.image}" alt="${f.name}" width="200" height="200" loading="lazy" /></div>` : ''}
+      <div class="founder-card__body">
+        <h3>${f.name}</h3>
+        <p class="founder-card__role">${f.role}</p>
+        <p class="founder-card__subtitle">${f.subtitle}</p>
+        <p class="founder-card__bio">${f.bio}</p>
+      </div>
+    </article>
+  `
+    )
+    .join('');
+
+  const pillars = a.pillars
+    .map(
+      (p, i) => `
+    <section class="about-pillar">
+      <h3><span class="about-pillar__num">${i + 1}</span> ${p.title}</h3>
+      <p>${p.intro}</p>
+      <ul>${p.items.map((item) => `<li>${item}</li>`).join('')}</ul>
+    </section>
+  `
+    )
+    .join('');
+
+  return `
+    <div class="page page--about">
+      <div class="container container--legal">
+        <header class="about-hero">
+          <h1 class="page-title">${a.title}</h1>
+          ${a.intro.map((p) => `<p class="about-lead">${p}</p>`).join('')}
+        </header>
+
+        <section class="about-section">
+          <h2>${a.foundersTitle}</h2>
+          <div class="founders-grid">${founderCards}</div>
+        </section>
+
+        <section class="about-section">
+          <h2>${a.visionTitle}</h2>
+          <p>${a.vision}</p>
+        </section>
+
+        <section class="about-section">
+          <h2>${a.ecosystemTitle}</h2>
+          <p>${a.ecosystemIntro}</p>
+          ${pillars}
+        </section>
+
+        <section class="about-section">
+          <h2>${a.futureTitle}</h2>
+          <p>${a.futureText}</p>
+          <blockquote class="about-quote">${a.quote}</blockquote>
+        </section>
+
+        <section class="about-section about-section--highlight">
+          <h2>${a.financeTitle}</h2>
+          <p>${a.financeIntro}</p>
+          <h3>${a.financeMechanismTitle}</h3>
+          <ul class="about-list">${a.financeItems.map((item) => `<li>${item}</li>`).join('')}</ul>
+          <h3>${a.financeClosingTitle}</h3>
+          <p>${a.financeClosing}</p>
+        </section>
+      </div>
+    </div>
+  `;
 }
 
 export function renderContactPage() {
