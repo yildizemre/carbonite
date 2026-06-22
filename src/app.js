@@ -12,6 +12,7 @@ function getNavItems(route, lang) {
 
   return [
     { label: t.about, href: '/hakkimizda' },
+    { label: t.marketplace, href: 'https://app.carbonited.com/v2/market', external: true },
     { label: t.why, href: isMarket ? '#why' : '/#why' },
     { label: t.contact, href: isMarket ? '#contact' : '/#contact' },
   ];
@@ -22,7 +23,7 @@ function renderNav(items, className = '') {
     <ul class="nav-list ${className}">
       ${items.map((item) => `
         <li class="nav-item${item.active ? ' is-active' : ''}">
-          <a href="${item.href}"><span>${item.label}</span></a>
+          <a href="${item.href}"${item.external ? ' target="_blank" rel="noopener noreferrer"' : ''}><span>${item.label}</span></a>
         </li>
       `).join('')}
     </ul>
