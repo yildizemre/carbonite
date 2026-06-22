@@ -618,7 +618,10 @@ h1, h2, h3, p {
   color: var(--carbon-charcoal);
   font-size: 0.9rem;
   font-weight: 600;
+  border: none;
   border-radius: 999px;
+  cursor: pointer;
+  font-family: inherit;
   transition: background 0.2s;
 }
 

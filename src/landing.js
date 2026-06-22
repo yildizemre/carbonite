@@ -228,6 +228,9 @@ GET /v1/projects</code></pre>
             </div>
           </div>
           <div class="projects-grid">${projectCards}</div>
+          <div class="section-cta">
+            <a class="btn-primary" href="https://app.carbonited.com" target="_blank" rel="noopener noreferrer">${t.marketplace.cta}</a>
+          </div>
         </div>
       </section>
 
