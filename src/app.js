@@ -59,6 +59,7 @@ export function navigate(path) {
 }
 
 function render() {
+  document.body.classList.remove('menu-open');
   const route = parseRoute();
   if (route.legacyRedirect && window.location.pathname !== '/') {
     history.replaceState({}, '', '/');
@@ -153,6 +154,8 @@ export function initPage() {
 
     if (!href.startsWith('/')) return;
     e.preventDefault();
+    document.body.classList.remove('menu-open');
+    closeMobileMenuFn?.();
     navigate(href);
   });
 
