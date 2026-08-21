@@ -87,6 +87,14 @@ export function getRouteSeo(route, lang = getLang()) {
         path: '/hakkimizda',
         ogType: 'website',
       };
+    case 'services':
+      return {
+        title: seo.servicesTitle,
+        description: seo.servicesDescription,
+        keywords,
+        path: '/hizmetler',
+        ogType: 'website',
+      };
     default:
       return {
         title: seo.homeTitle,
@@ -186,6 +194,7 @@ export function buildSitemapXml() {
   const urls = [
     { loc: '/', priority: '1.0', changefreq: 'daily' },
     { loc: '/hakkimizda', priority: '0.8', changefreq: 'monthly' },
+    { loc: '/hizmetler', priority: '0.8', changefreq: 'monthly' },
     { loc: '/gizlilik', priority: '0.5', changefreq: 'monthly' },
     { loc: '/etik-ilkeler', priority: '0.5', changefreq: 'monthly' },
     { loc: '/sartlar', priority: '0.5', changefreq: 'monthly' },

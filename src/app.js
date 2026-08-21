@@ -1,4 +1,4 @@
-import { renderMarketPage, renderPrivacyPage, renderTermsPage, renderEthicsPage, renderAboutPage, renderContactPage } from './pages.js';
+import { renderMarketPage, renderPrivacyPage, renderTermsPage, renderEthicsPage, renderAboutPage, renderServicesPage, renderContactPage } from './pages.js';
 import { applySeo } from './seo.js';
 import { content, getLang, setLang } from './content.js';
 
@@ -12,6 +12,7 @@ function getNavItems(route, lang) {
 
   return [
     { label: t.about, href: '/hakkimizda' },
+    { label: t.services, href: '/hizmetler' },
     { label: t.marketplace, href: 'https://app.carbonited.com/v2/market', external: true },
     { label: t.why, href: isMarket ? '#why' : '/#why' },
     { label: t.contact, href: isMarket ? '#contact' : '/#contact' },
@@ -34,6 +35,7 @@ export function parseRoute() {
   const parts = window.location.pathname.split('/').filter(Boolean);
 
   if (parts[0] === 'hakkimizda') return { page: 'about' };
+  if (parts[0] === 'hizmetler') return { page: 'services' };
   if (parts[0] === 'gizlilik') return { page: 'privacy' };
   if (parts[0] === 'sartlar') return { page: 'terms' };
   if (parts[0] === 'etik-ilkeler') return { page: 'ethics' };
@@ -45,6 +47,7 @@ export function parseRoute() {
 function renderContent(route) {
   switch (route.page) {
     case 'about': return renderAboutPage();
+    case 'services': return renderServicesPage();
     case 'privacy': return renderPrivacyPage();
     case 'terms': return renderTermsPage();
     case 'ethics': return renderEthicsPage();
@@ -108,6 +111,7 @@ function render() {
           <p class="footer-copy">${t.footer.copy}</p>
           <nav class="footer-nav" aria-label="${t.ui.footerNav}">
             <a href="/hakkimizda">${t.footer.about}</a>
+            <a href="/hizmetler">${t.footer.services}</a>
             <a href="/gizlilik">${t.footer.privacy}</a>
             <a href="/etik-ilkeler">${t.footer.ethics}</a>
             <a href="/sartlar">${t.footer.terms}</a>

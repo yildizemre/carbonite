@@ -5,7 +5,8 @@ import { aboutContent } from './about-content.js';
 import { privacyContent } from './privacy-content.js';
 import { termsContent } from './terms-content.js';
 import { ethicsContent } from './ethics-content.js';
-import { renderLegalPage } from './legal-render.js';
+import { servicesContent } from './services-content.js';
+import { renderLegalPage, renderLegalSection } from './legal-render.js';
 
 export function renderBreadcrumb(items, lang = getLang()) {
   const t = content[lang].ui;
@@ -288,6 +289,30 @@ export function renderEthicsPage() {
   const lang = getLang();
   const { title, introTitle, intro = [], sections } = ethicsContent[lang];
   return renderLegalPage(title, sections, { intro, introTitle, wide: true });
+}
+
+export function renderServicesPage() {
+  const lang = getLang();
+  const s = servicesContent[lang];
+
+  return `
+    <div class="page page--about page--services">
+      <div class="container container--legal">
+        <header class="about-hero">
+          <h1 class="page-title">${s.title}</h1>
+          <h2 class="services-intro-title">${s.intro.title}</h2>
+          ${s.intro.paragraphs.map((p) => `<p class="about-lead">${p}</p>`).join('')}
+        </header>
+        <div class="legal-content">
+          ${s.sections.map((section) => renderLegalSection(section)).join('')}
+        </div>
+        <div class="services-cta">
+          <p>${s.cta.text}</p>
+          <a class="btn-primary" href="/iletisim">${s.cta.button}</a>
+        </div>
+      </div>
+    </div>
+  `;
 }
 
 export function renderAboutPage() {

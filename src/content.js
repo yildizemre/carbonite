@@ -3,6 +3,7 @@ export const content = {
     nav: {
       marketplace: 'Pazaryeri',
       about: 'Biz Kimiz',
+      services: 'Hizmetlerimiz',
       why: 'Neden Carbonited?',
       contact: 'İletişim',
       login: 'Giriş Yap',
@@ -98,7 +99,7 @@ export const content = {
       submit: 'Talebi Gönder',
       note: 'Form demo amaçlıdır; talepler şu an kaydedilmemektedir.',
     },
-    footer: { copy: '© 2026 Carbonited. Tüm hakları saklıdır.', about: 'Biz Kimiz', privacy: 'Gizlilik', ethics: 'Etik İlkeler', terms: 'Şartlar', contact: 'İletişim' },
+    footer: { copy: '© 2026 Carbonited. Tüm hakları saklıdır.', about: 'Biz Kimiz', services: 'Hizmetlerimiz', privacy: 'Gizlilik', ethics: 'Etik İlkeler', terms: 'Şartlar', contact: 'İletişim' },
     ui: {
       skipLink: 'İçeriğe atla',
       openMenu: 'Menüyü aç',
@@ -243,6 +244,8 @@ export const content = {
       contactDescription: 'Carbonited ile iletişime geçin. Kurumsal satış, proje başvurusu ve teknik destek.',
       aboutTitle: 'Biz Kimiz — Carbonited',
       aboutDescription: 'Carbonited ekibi, vizyonu ve yeşil ekonomi altyapısı hakkında bilgi edinin. ReFi, Deep-Tech ve iklim finansmanında liderlik.',
+      servicesTitle: 'Hizmetlerimiz — Carbonited',
+      servicesDescription: 'Orman ve arazi monetizasyonu, drone ağaçlandırma, karbon kredisi tedariki ve CO2CCS standartlı iklim nötr çözümler.',
       detailTitle: (title) => `${title} | Karbon Kredisi Projesi — Carbonited`,
       detailDescription: (p) => `${p.title} — ${p.developer} tarafından geliştirilen, ${p.verifier} doğrulamalı tokenize karbon kredisi. ${p.registry}, vintage ${p.vintage}.`,
       purchaseTitle: (title) => `${title} Karbon Kredisi Satın Al — Carbonited`,
@@ -250,7 +253,7 @@ export const content = {
     },
   },
   en: {
-    nav: { marketplace: 'Marketplace', about: 'About Us', why: 'Why Carbonited?', contact: 'Contact', login: 'Sign In' },
+    nav: { marketplace: 'Marketplace', about: 'About Us', services: 'Our Services', why: 'Why Carbonited?', contact: 'Contact', login: 'Sign In' },
     hero: {
       title: 'Buy, Sell, and Retire Corporate Carbon Credits in One Place',
       subtitle: 'Manage digital carbon credits with direct access, transparency, and instant settlement. Simplify global compliance and achieve your net-zero goals.',
@@ -325,7 +328,7 @@ export const content = {
       solutions: ['Carbon credit procurement', 'Project listing', 'dMRV services', 'API & integration', 'Other'],
       submit: 'Submit Request', note: 'This form is for demo purposes; submissions are not stored yet.',
     },
-    footer: { copy: '© 2026 Carbonited. All rights reserved.', about: 'About Us', privacy: 'Privacy', ethics: 'Code of Ethics', terms: 'Terms', contact: 'Contact' },
+    footer: { copy: '© 2026 Carbonited. All rights reserved.', about: 'About Us', services: 'Our Services', privacy: 'Privacy', ethics: 'Code of Ethics', terms: 'Terms', contact: 'Contact' },
     ui: {
       skipLink: 'Skip to content',
       openMenu: 'Open menu',
@@ -470,6 +473,8 @@ export const content = {
       contactDescription: 'Contact Carbonited. Enterprise sales, project applications, and technical support.',
       aboutTitle: 'About Us — Carbonited',
       aboutDescription: 'Learn about the Carbonited team, vision, and green economy infrastructure. Leadership in ReFi, deep tech, and climate finance.',
+      servicesTitle: 'Our Services — Carbonited',
+      servicesDescription: 'Forest and land monetization, drone reforestation, carbon credit procurement, and CO2CCS climate-neutral solutions.',
       detailTitle: (title) => `${title} | Carbon Credit Project — Carbonited`,
       detailDescription: (p) => `${p.title} — tokenized carbon credit project developed by ${p.developer}, verified by ${p.verifier}. ${p.registry}, vintage ${p.vintage}.`,
       purchaseTitle: (title) => `Buy ${title} Carbon Credits — Carbonited`,
